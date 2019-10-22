@@ -1,0 +1,62 @@
+﻿<Window x:Class="GraphApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphApp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="MainWindow" MinHeight="640" MinWidth="880" WindowStyle="None">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Style="{StaticResource MenuGrid}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="160"/>
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:PackIcon Kind="Graph" Background="AliceBlue"/>
+
+            <Menu Grid.Column="1" Background="{x:Null}" Cursor="Arrow">
+                <MenuItem Header="_File"></MenuItem>
+                <MenuItem Header="_About"></MenuItem>
+            </Menu>
+
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="MinimizeBtn" Grid.Column="0" Style="{StaticResource BaseButton}"
+                        ToolTip="Minimize" Click="MinimizeBtn_Click">
+                    <materialDesign:PackIcon Kind="WindowMinimize"/>
+                </Button>
+                <Button x:Name="MaximizeBtn" Grid.Column="1" Style="{StaticResource BaseButton}"
+                        ToolTip="Maximize" Click="MaximizeBtn_Click" >
+                    <materialDesign:PackIcon Kind="WindowMaximize"/>
+                </Button>
+                <Button x:Name="CloseBtn" Grid.Column="2" Style="{StaticResource BaseButton}"
+                        ToolTip="Close program" Click="CloseBtn_Click">
+                    <materialDesign:PackIcon Kind="Close"/>
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Style="{StaticResource BaseGrid}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="GraphDrawGrid" Grid.Column="1" Style="{StaticResource BaseGrid}">
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
