@@ -2,15 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:GraphApp.LayoutDictionary">
 
-    <Style x:Key="BaseButton" TargetType="Button">
-        <Setter Property="Background" Value="{x:Null}"/>
-        <Setter Property="BorderBrush" Value="{x:Null}"/>
-        <Setter Property="Cursor" Value="Hand"/>
+    <Style x:Key="BaseLabel" TargetType="Label">
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-    </Style>
-
-    <Style x:Key="ControlButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontFamily" Value="Consolas"/>
     </Style>

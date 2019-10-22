@@ -58,17 +58,65 @@
 
         <Grid Grid.Row="1" Style="{StaticResource BaseGrid}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="140"/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Button Height="50" Width="100" Click="AsyncButton1_Click">Draw</Button>
-                <Button Height="50" Width="100" Click="Button2_Click" Grid.Row="1">Clear</Button>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.7*"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Style="{StaticResource BaseLabel}" HorizontalAlignment="Left" 
+                           FontWeight="Black">
+                        Generate
+                    </Label>
+                    
+                    <Label Style="{StaticResource BaseLabel}" Grid.Row="1">
+                        Vertex:
+                    </Label>
+
+                    <Label Grid.Row="2" Style="{StaticResource BaseLabel}">
+                        Propability:
+                    </Label>
+
+                    <TextBox x:Name="TextBoxVertex" Grid.Row="1" Grid.Column="1" 
+                             Style="{StaticResource BaseTextBox}" AutomationProperties.HelpText="cos"
+                             PreviewTextInput="TextBoxPropability_PreviewTextInput"/>
+                    <TextBox x:Name="TextBoxPropability" Grid.Row="2" Grid.Column="1" 
+                             Style="{StaticResource BaseTextBox}" 
+                             PreviewTextInput="TextBoxPropability_PreviewTextInput"/>
+                </Grid>
+
+                <Grid Grid.Row="4" Style="{StaticResource BaseGrid}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Click="AsyncButton1_Click" Style="{StaticResource ControlButton}" 
+                            Grid.Column="1">Draw</Button>
+                    <Button Click="Button2_Click" Style="{StaticResource ControlButton}" 
+                            Grid.Column="0">Clear</Button>
+                </Grid>
+                
             </Grid>
             
             <Grid x:Name="GraphDrawGrid" Grid.Column="1" Style="{StaticResource BaseGrid}" 

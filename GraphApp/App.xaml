@@ -9,6 +9,8 @@
                 <ResourceDictionary Source=" LayoutDictionary\GridLayout.xaml "/>
                 <ResourceDictionary Source=" LayoutDictionary\ButtonLayout.xaml "/>
                 <ResourceDictionary Source=" LayoutDictionary\MaterialDesigneIconLayout.xaml "/>
+                <ResourceDictionary Source=" LayoutDictionary\LabelLayout.xaml "/>
+                <ResourceDictionary Source=" LayoutDictionary\TextBoxLayout.xaml "/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
