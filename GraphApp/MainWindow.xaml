@@ -47,7 +47,7 @@
                 </Button>
                 <Button x:Name="MaximizeBtn" Grid.Column="1" Style="{StaticResource BaseButton}"
                         ToolTip="Maximize" Click="MaximizeBtn_Click" >
-                    <materialDesign:PackIcon Kind="WindowMaximize"/>
+                    <materialDesign:PackIcon Kind="WindowMaximize" Name="MaximizeBtnIcon"/>
                 </Button>
                 <Button x:Name="CloseBtn" Grid.Column="2" Style="{StaticResource BaseButton}"
                         ToolTip="Close program" Click="CloseBtn_Click">
@@ -62,7 +62,17 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid x:Name="GraphDrawGrid" Grid.Column="1" Style="{StaticResource BaseGrid}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Height="50" Width="100" Click="AsyncButton1_Click">Draw</Button>
+                <Button Height="50" Width="100" Click="Button2_Click" Grid.Row="1">Clear</Button>
+            </Grid>
+            
+            <Grid x:Name="GraphDrawGrid" Grid.Column="1" Style="{StaticResource BaseGrid}" 
+                  Background="WhiteSmoke">
 
             </Grid>
         </Grid>

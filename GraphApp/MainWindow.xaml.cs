@@ -24,8 +24,6 @@ namespace GraphApp
         public MainWindow()
         {
             InitializeComponent();
-
-            GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 300), 100, 300));
         }
 
         #region Window state
@@ -44,11 +42,13 @@ namespace GraphApp
             {
                 MaximizeBtn.ToolTip = "Restore Down";
                 WindowState = WindowState.Maximized;
+                MaximizeBtnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowRestore;
             }
             else
             {
                 MaximizeBtn.ToolTip = "Maximize";
                 WindowState = WindowState.Normal;
+                MaximizeBtnIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.WindowMaximize;
             }
         }
 
@@ -123,13 +123,32 @@ namespace GraphApp
             System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
             path.Stroke = Brushes.Black;
             path.StrokeThickness = 2;
-            path.HorizontalAlignment = HorizontalAlignment.Left;
+            path.HorizontalAlignment = HorizontalAlignment.Center;
             path.VerticalAlignment = VerticalAlignment.Center;
-            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-            myEllipseGeometry.Center = startPoint;
-            myEllipseGeometry.RadiusX = radiusX;
-            myEllipseGeometry.RadiusY = radiusY;
-            path.Data = myEllipseGeometry;
+            EllipseGeometry ellipseGeometry = new EllipseGeometry();
+            ellipseGeometry.Center = startPoint;
+            ellipseGeometry.RadiusX = radiusX;
+            ellipseGeometry.RadiusY = radiusY;
+            path.Data = ellipseGeometry;
+            return path;
+        }
+
+
+        #endregion
+
+        #region Draw Path
+
+        public async Task<System.Windows.Shapes.Path> DrawPath(Point startPoint)
+        {
+            System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
+            path.Stroke = Brushes.Black;
+            path.StrokeThickness = 2;
+            path.HorizontalAlignment = HorizontalAlignment.Center;
+            path.VerticalAlignment = VerticalAlignment.Center;
+            LineGeometry lineGeometry = new LineGeometry();
+            lineGeometry.StartPoint = startPoint;
+            lineGeometry.EndPoint = new Point(startPoint.X + 100, startPoint.Y + 100);
+            path.Data = lineGeometry;
             return path;
         }
 
@@ -138,6 +157,15 @@ namespace GraphApp
 
         #endregion
 
-        
+        private async void AsyncButton1_Click(object sender, RoutedEventArgs e)
+        {
+            GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 0), 100, 100));
+            GraphDrawGrid.Children.Add(await DrawPath(new Point(0, 0)));
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            GraphDrawGrid.Children.Clear();
+        }
     }
 }
