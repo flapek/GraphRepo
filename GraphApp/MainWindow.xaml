@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:GraphApp"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="640" MinWidth="880" WindowStyle="None">
+        Title="MainWindow" MinHeight="640" MinWidth="880" WindowStyle="None" MouseDown="Window_MouseDown" 
+        MouseDoubleClick="Window_MouseDoubleClick">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="FloralWhite"/>
+            <GradientStop Color="LightGray" Offset="0.2"/>
+            <GradientStop Color="#FF747474" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -20,7 +28,7 @@
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
 
-            <materialDesign:PackIcon Kind="Graph" Background="AliceBlue"/>
+            <materialDesign:PackIcon Kind="Graphql" Background="AliceBlue"/>
 
             <Menu Grid.Column="1" Background="{x:Null}" Cursor="Arrow">
                 <MenuItem Header="_File"></MenuItem>

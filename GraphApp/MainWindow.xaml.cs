@@ -24,7 +24,7 @@ namespace GraphApp
         public MainWindow()
         {
             InitializeComponent();
-            
+
             GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 300), 100, 300));
         }
 
@@ -53,6 +53,35 @@ namespace GraphApp
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e) => this.Close();
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.Left)
+            {
+                return;
+            }
+
+            DragMove();
+        }
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.Left)
+            {
+                return;
+            }
+
+            if (WindowState == WindowState.Normal)
+            {
+                MaximizeBtn.ToolTip = "Restore Down";
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                MaximizeBtn.ToolTip = "Maximize";
+                WindowState = WindowState.Normal;
+            }
+        }
 
         #endregion
 
@@ -104,8 +133,11 @@ namespace GraphApp
             return path;
         }
 
+
         #endregion
 
         #endregion
+
+        
     }
 }
