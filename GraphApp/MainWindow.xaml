@@ -97,10 +97,12 @@
 
                     <TextBox x:Name="TextBoxVertex" Grid.Row="1" Grid.Column="1" 
                              Style="{StaticResource BaseTextBox}" AutomationProperties.HelpText="cos"
-                             PreviewTextInput="TextBoxPropability_PreviewTextInput"/>
+                             PreviewTextInput="TextBoxVertex_PreviewTextInput" 
+                             TextInput="TextBoxVertex_TextInput"/>
                     <TextBox x:Name="TextBoxPropability" Grid.Row="2" Grid.Column="1" 
                              Style="{StaticResource BaseTextBox}" 
-                             PreviewTextInput="TextBoxPropability_PreviewTextInput"/>
+                             PreviewTextInput="TextBoxPropability_PreviewTextInput"
+                             TextInput="TextBoxPropability_TextInput"/>
                 </Grid>
 
                 <Grid Grid.Row="4" Style="{StaticResource BaseGrid}">
@@ -111,7 +113,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     
-                    <Button Click="AsyncButton1_Click" Style="{StaticResource ControlButton}" 
+                    <Button Click="Button1_Click" Style="{StaticResource ControlButton}" 
                             Grid.Column="1">Draw</Button>
                     <Button Click="Button2_Click" Style="{StaticResource ControlButton}" 
                             Grid.Column="0">Clear</Button>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphApp.Class;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -158,7 +159,7 @@ namespace GraphApp
 
         #region Button 
 
-        private async void AsyncButton1_Click(object sender, RoutedEventArgs e)
+        private async void Button1_Click(object sender, RoutedEventArgs e)
         {
             GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 0), 100, 100));
             GraphDrawGrid.Children.Add(await DrawPath(new Point(0, 0)));
@@ -173,17 +174,30 @@ namespace GraphApp
 
         #region TextBox input
 
-        private void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private async void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
+
+        private async void TextBoxVertex_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsTextAllowed(e.Text);
+            e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
+            MessageBox.Show(e.Text.Length.ToString());
         }
 
-        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-        private static bool IsTextAllowed(string text)
+
+        //nie działa 
+        private async void TextBoxVertex_TextInput(object sender, TextCompositionEventArgs e)
         {
-            return !_regex.IsMatch(text);
+            e.Handled = !await TheCorrectnessOfTheText.IsAValueIntheRange(10, 20, e.Text);
+        }
+
+        private async void TextBoxPropability_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!await TheCorrectnessOfTheText.IsAValueIntheRange(0.35, 0.45, e.Text))
+            {
+                MessageBox.Show("zła wartość!");
+            }
         }
 
         #endregion
+
     }
 }
