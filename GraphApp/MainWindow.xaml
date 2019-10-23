@@ -58,7 +58,7 @@
 
         <Grid Grid.Row="1" Style="{StaticResource BaseGrid}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="240"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -79,30 +79,28 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.4*"/>
                     </Grid.ColumnDefinitions>
 
                     <Label Style="{StaticResource BaseLabel}" HorizontalAlignment="Left" 
                            FontWeight="Black">
                         Generate
                     </Label>
-                    
+
                     <Label Style="{StaticResource BaseLabel}" Grid.Row="1">
-                        Vertex:
+                        Vertex(10-30):
                     </Label>
 
                     <Label Grid.Row="2" Style="{StaticResource BaseLabel}">
-                        Propability:
+                        Propability(0,35-0,45):
                     </Label>
 
                     <TextBox x:Name="TextBoxVertex" Grid.Row="1" Grid.Column="1" 
                              Style="{StaticResource BaseTextBox}" AutomationProperties.HelpText="cos"
-                             PreviewTextInput="TextBoxVertex_PreviewTextInput" 
-                             TextInput="TextBoxVertex_TextInput"/>
+                             PreviewTextInput="TextBoxVertex_PreviewTextInput" MaxLength="2" />
                     <TextBox x:Name="TextBoxPropability" Grid.Row="2" Grid.Column="1" 
-                             Style="{StaticResource BaseTextBox}" 
-                             PreviewTextInput="TextBoxPropability_PreviewTextInput"
-                             TextInput="TextBoxPropability_TextInput"/>
+                             Style="{StaticResource BaseTextBox}" MaxLength="4"
+                             PreviewTextInput="TextBoxPropability_PreviewTextInput"/>
                 </Grid>
 
                 <Grid Grid.Row="4" Style="{StaticResource BaseGrid}">
@@ -112,15 +110,15 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Button Click="Button1_Click" Style="{StaticResource ControlButton}" 
                             Grid.Column="1">Draw</Button>
                     <Button Click="Button2_Click" Style="{StaticResource ControlButton}" 
                             Grid.Column="0">Clear</Button>
                 </Grid>
-                
+
             </Grid>
-            
+
             <Grid x:Name="GraphDrawGrid" Grid.Column="1" Style="{StaticResource BaseGrid}" 
                   Background="WhiteSmoke">
 

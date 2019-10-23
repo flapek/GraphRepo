@@ -23,9 +23,11 @@ namespace GraphApp
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         #region Window state
@@ -174,30 +176,43 @@ namespace GraphApp
 
         #region TextBox input
 
-        private async void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
-
         private async void TextBoxVertex_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
-            MessageBox.Show(e.Text.Length.ToString());
-        }
-
-
-        //nie działa 
-        private async void TextBoxVertex_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !await TheCorrectnessOfTheText.IsAValueIntheRange(10, 20, e.Text);
-        }
-
-        private async void TextBoxPropability_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!await TheCorrectnessOfTheText.IsAValueIntheRange(0.35, 0.45, e.Text))
+            var textBox = sender as TextBox;
+            if (!string.IsNullOrWhiteSpace(e.Text) && !string.IsNullOrWhiteSpace(textBox.Text))
             {
-                MessageBox.Show("zła wartość!");
+                string str = textBox.Text + e.Text;
+                if (str.Length <= 2)
+                {
+                    if (!await TheCorrectnessOfTheText.IsAValueInTheRange(10, 30, str))
+                    {
+                        MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+        }
+
+        //do poprawy
+        private async void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
+            var textBox = sender as TextBox;
+            if (!string.IsNullOrWhiteSpace(e.Text) && !string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                string str = textBox.Text + e.Text;
+                if (str.Length <= 4 && str.Length >=3)
+                {
+                    if (!await TheCorrectnessOfTheText.IsAValueInTheRange(0.35, 0.45, str))
+                    {
+                        MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
             }
         }
 
         #endregion
+
 
     }
 }

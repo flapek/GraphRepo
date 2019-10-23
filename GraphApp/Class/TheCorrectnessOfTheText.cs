@@ -13,10 +13,10 @@ namespace GraphApp.Class
         /// check that the text entered is correct
         /// </summary>
 
-        private static readonly Regex _regex = new Regex("[^0-9.]+"); //regex that matches disallowed text
+        private static readonly Regex _regex = new Regex("[^0-9,]+"); //regex that matches disallowed text
         public static async Task<bool> IsTextAllowed(string text) => !_regex.IsMatch(text);
 
-        public static async Task<bool> IsAValueIntheRange(double min, double max, string text)
+        public static async Task<bool> IsAValueInTheRange(double min, double max, string text)
         {
             if (!double.TryParse(text, out double result))
                 return false;
