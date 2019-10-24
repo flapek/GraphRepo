@@ -161,58 +161,37 @@ namespace GraphApp
 
         #region Button 
 
-        private async void Button1_Click(object sender, RoutedEventArgs e)
-        {
-            GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 0), 100, 100));
-            GraphDrawGrid.Children.Add(await DrawPath(new Point(0, 0)));
-        }
-
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
             GraphDrawGrid.Children.Clear();
+        }
+
+        private async void DrawGraphBtn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!await TheCorrectnessOfTheText.IsAValueInTheRange(10, 30, TextBoxVertex.Text) || !await TheCorrectnessOfTheText.IsAValueInTheRange(0.35, 0.45, TextBoxPropability.Text))
+            {
+                MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                TextBoxVertex.Clear();
+                return;
+            }
+            GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 0), 100, 100));
+            GraphDrawGrid.Children.Add(await DrawPath(new Point(0, 0)));
         }
 
         #endregion
 
         #region TextBox input
 
-        private async void TextBoxVertex_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
-            var textBox = sender as TextBox;
-            if (!string.IsNullOrWhiteSpace(e.Text) && !string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                string str = textBox.Text + e.Text;
-                if (str.Length <= 2)
-                {
-                    if (!await TheCorrectnessOfTheText.IsAValueInTheRange(10, 30, str))
-                    {
-                        MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                }
-            }
-        }
 
-        //do poprawy
-        private async void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
-            var textBox = sender as TextBox;
-            if (!string.IsNullOrWhiteSpace(e.Text) && !string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                string str = textBox.Text + e.Text;
-                if (str.Length <= 4 && str.Length >=3)
-                {
-                    if (!await TheCorrectnessOfTheText.IsAValueInTheRange(0.35, 0.45, str))
-                    {
-                        MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                }
-            }
-        }
+
+        private async void TextBoxVertex_PreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
+
+        private async void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
+
+
 
         #endregion
 
-
+       
     }
 }
