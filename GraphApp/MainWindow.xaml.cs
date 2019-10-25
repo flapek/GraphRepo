@@ -1,20 +1,8 @@
 ﻿using GraphApp.Class;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GraphApp
 {
@@ -77,85 +65,15 @@ namespace GraphApp
 
             if (WindowState == WindowState.Normal)
             {
-                MaximizeBtn.ToolTip = "Restore Down";
+                MaximizeBtn.ToolTip = "restore down";
                 WindowState = WindowState.Maximized;
             }
             else
             {
-                MaximizeBtn.ToolTip = "Maximize";
+                MaximizeBtn.ToolTip = "maximize";
                 WindowState = WindowState.Normal;
             }
         }
-
-        #endregion
-
-        #region Grapg Algorithms
-
-        public async Task<int[][]> ReadFile(string path)
-        {
-            int[][] matrix;
-            List<string> matrixList = new List<string>();
-            using (StreamReader stream = new StreamReader(path))
-            {
-                while (stream.Peek() >= 0)
-                {
-                    matrixList.Add(stream.ReadLine());
-                }
-            }
-
-            matrix = new int[matrixList.Count()][];
-            for (int i = 0; i < matrixList.Count(); i++)
-            {
-                matrix[i] = new int[matrix.Count()];
-            }
-
-            for (int i = 0; i < matrix.Length; i++)
-            {
-                for (int j = 0; j < matrix[i].Length; j++)
-                {
-                    matrix[i][j] = 0;
-                }
-            }
-
-            return matrix;
-        }
-
-        #region Draw Elipse
-
-        public System.Windows.Shapes.Path DrawElipse(Point startPoint, int radiusX, int radiusY)
-        {
-            System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
-            path.Stroke = Brushes.Black;
-            path.StrokeThickness = 2;
-            path.HorizontalAlignment = HorizontalAlignment.Center;
-            path.VerticalAlignment = VerticalAlignment.Center;
-            EllipseGeometry ellipseGeometry = new EllipseGeometry();
-            ellipseGeometry.Center = startPoint;
-            ellipseGeometry.RadiusX = radiusX;
-            ellipseGeometry.RadiusY = radiusY;
-            path.Data = ellipseGeometry;
-            return path;
-        }
-
-        #endregion
-
-        #region Draw Path
-
-        public async Task<System.Windows.Shapes.Path> DrawPath(Point startPoint)
-        {
-            System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
-            path.Stroke = Brushes.Black;
-            path.StrokeThickness = 2;
-            path.HorizontalAlignment = HorizontalAlignment.Center;
-            path.VerticalAlignment = VerticalAlignment.Center;
-            LineGeometry lineGeometry = new LineGeometry();
-            lineGeometry.StartPoint = startPoint;
-            lineGeometry.EndPoint = new Point(startPoint.X + 100, startPoint.Y + 100);
-            path.Data = lineGeometry;
-            return path;
-        }
-
-        #endregion
 
         #endregion
 
@@ -174,24 +92,20 @@ namespace GraphApp
                 TextBoxVertex.Clear();
                 return;
             }
-            GraphDrawGrid.Children.Add(DrawElipse(new Point(0, 0), 100, 100));
-            GraphDrawGrid.Children.Add(await DrawPath(new Point(0, 0)));
+            GraphDrawGrid.Children.Add(await Draw.DrawElipse(new Point(0, 0), 100, 100));
+            GraphDrawGrid.Children.Add(await Draw.DrawPath(new Point(0, 0)));
         }
 
         #endregion
 
         #region TextBox input
 
-
-
         private async void TextBoxVertex_PreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
 
         private async void TextBoxPropability_PreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = !await TheCorrectnessOfTheText.IsTextAllowed(e.Text);
 
-
-
         #endregion
 
-       
+        
     }
 }
