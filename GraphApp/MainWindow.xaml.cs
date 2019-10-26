@@ -1,4 +1,5 @@
 ﻿using GraphApp.Class;
+using GraphApp.Model;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -79,7 +80,7 @@ namespace GraphApp
 
         #region Button 
 
-        private void Button2_Click(object sender, RoutedEventArgs e)
+        private void ClearGraphBtn_Click(object sender, RoutedEventArgs e)
         {
             GraphDrawGrid.Children.Clear();
         }
@@ -92,8 +93,22 @@ namespace GraphApp
                 TextBoxVertex.Clear();
                 return;
             }
-            GraphDrawGrid.Children.Add(await Draw.DrawElipse(new Point(0, 0), 100, 100));
-            GraphDrawGrid.Children.Add(await Draw.DrawPath(new Point(0, 0)));
+            //GraphDrawGrid.Children.Add(await Draw.DrawElipse(new Point(0, 0), 100, 100));
+            //GraphDrawGrid.Children.Add(await Draw.DrawPath(new Point(0, 0)));
+
+            GraphDrawGrid.Children.Add(await Draw.DrawVertex(new Vertex()
+            {
+                Id = "A",
+                Point = new Point(100, 100)
+            }));
+
+            GraphDrawGrid.Children.Add(await Draw.DrawVertex(new Vertex()
+            {
+                Id = "B",
+                Point = new Point(200, 200)
+            }));
+
+            GraphDrawGrid.Children.Add(await Draw.DrawPath(new Point(100, 100), new Point(200,200)));
         }
 
         #endregion
@@ -106,6 +121,6 @@ namespace GraphApp
 
         #endregion
 
-        
+
     }
 }

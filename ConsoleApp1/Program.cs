@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,14 +12,9 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            List<string> l = new List<string>();
-            l.Add("0 1 1 0 0");
-            l.Add("1 0 1 0 0");
-            l.Add("1 1 0 1 0");
-            l.Add("0 0 1 0 0");
-            l.Add("0 0 1 0 0");
+            var path = @"C:\Users\filap\source\repos\Graph\GraphApp\Example\GraphExample.txt";
 
-            int[][] tab = GetGraphArray(l);
+            int[][] tab = GetGraphArray(ReadFile(path));
 
             for (int i = 0; i < tab.Length; i++)
             {
@@ -52,6 +48,20 @@ namespace ConsoleApp1
             }
 
             return matrix;
+        }
+
+        public static List<string> ReadFile(string path)
+        {
+            List<string> list = new List<string>();
+            using (StreamReader stream = new StreamReader(path))
+            {
+                while (stream.Peek() >= 0)
+                {
+                    list.Add(stream.ReadLine());
+                }
+            }
+
+            return list;
         }
     }
 }

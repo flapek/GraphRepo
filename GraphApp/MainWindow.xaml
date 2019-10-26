@@ -114,7 +114,8 @@
                     <Button x:Name="DrawGraphBtn" Style="{StaticResource ControlButton}" 
                             PreviewMouseLeftButtonDown="DrawGraphBtn_PreviewMouseLeftButtonDown" 
                             Grid.Column="1">Draw</Button>
-                    <Button Click="Button2_Click" Style="{StaticResource ControlButton}" 
+                    <Button x:Name="ClearGraphBtn" Style="{StaticResource ControlButton}" 
+                            Click="ClearGraphBtn_Click" 
                             Grid.Column="0">Clear</Button>
                 </Grid>
 
