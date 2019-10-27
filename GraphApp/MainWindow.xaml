@@ -133,10 +133,8 @@
 
             </Grid>
 
-            <Grid x:Name="GraphDrawGrid" Grid.Column="1" Style="{StaticResource BaseGrid}" 
-                  Background="WhiteSmoke">
+            <Canvas x:Name="GraphDrawCanvas" Grid.Column="1" Background="WhiteSmoke"/>
 
-            </Grid>
         </Grid>
     </Grid>
 </Window>

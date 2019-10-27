@@ -108,7 +108,7 @@ namespace GraphApp
 
         private void ClearGraphBtn_Click(object sender, RoutedEventArgs e)
         {
-            GraphDrawGrid.Children.Clear();
+            GraphDrawCanvas.Children.Clear();
         }
 
         private async void DrawGraphBtn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -121,19 +121,19 @@ namespace GraphApp
             }
             //GraphDrawGrid.Children.Add(await Draw.DrawElipse(new Point(0, 0), 100, 100));
 
-            GraphDrawGrid.Children.Add(await Draw.DrawNode(new Node()
+            GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
             {
                 Id = "A",
                 CenterPoint = new Point(100, 100)
             }));
 
-            GraphDrawGrid.Children.Add(await Draw.DrawNode(new Node()
+            GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
             {
                 Id = "B",
                 CenterPoint = new Point(200, 200)
             }));
 
-            GraphDrawGrid.Children.Add(await Draw.DrawEdge(new Point(100, 100), new Point(200, 200)));
+            GraphDrawCanvas.Children.Add(await Draw.DrawEdge(new Point(100, 100), new Point(200, 200)));
         }
 
         #endregion
