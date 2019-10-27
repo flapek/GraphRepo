@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace GraphApp.Model
 {
-    class Vertex
+    class Node
     {
         public string Id { get; set; }
-        public Point Point { get; set; }
+        public Point CenterPoint { get; set; }
     }
 }

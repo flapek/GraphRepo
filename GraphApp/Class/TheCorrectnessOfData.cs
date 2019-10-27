@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace GraphApp.Class
 {
-    class TheCorrectnessOfTheText
+    class TheCorrectnessOfData
+
     {
         /// <summary>
         /// check that the text entered is correct
@@ -25,5 +26,6 @@ namespace GraphApp.Class
             else
                 return false;
         }
+        public static async Task<bool> IsTheCorrectNumberOfEdges(int edges, int nodes) => edges < Calculations.CalculateTheBorderNumberOfEdges(nodes);
     }
 }

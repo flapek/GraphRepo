@@ -1,10 +1,7 @@
 ﻿using GraphApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GraphApp.Class
@@ -24,7 +21,7 @@ namespace GraphApp.Class
             return path;
         }
 
-        public static async Task<System.Windows.Shapes.Path> DrawPath(Point startPoint, Point endPoint)
+        public static async Task<System.Windows.Shapes.Path> DrawEdge(Point startPoint, Point endPoint)
         {
             System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
             path.Stroke = Brushes.Black;
@@ -36,32 +33,27 @@ namespace GraphApp.Class
             return path;
         }
 
-        public static async Task<System.Windows.Shapes.Path> DrawVertex(Vertex vertex)
+        public static async Task<System.Windows.Shapes.Path> DrawNode(Node vertex)
         {
             System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
             path.Stroke = Brushes.Black;
+            path.Fill = Brushes.Gray;
             path.StrokeThickness = 2;
             path.Name = vertex.Id;
-            path.MouseEnter += Vertex_MouseEnter;
-            //path.MouseLeave += Vertex_MouseLeave;
-            
-            EllipseGeometry ellipseGeometry = new EllipseGeometry(vertex.Point, 10, 10);
-            
+            path.MouseEnter += Node_MouseEnter;
+
+            EllipseGeometry ellipseGeometry = new EllipseGeometry(vertex.CenterPoint, 15, 15);
+
             path.Data = ellipseGeometry;
             return path;
 
         }
 
-        //private static void Vertex_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        //{
-        //    System.Windows.Shapes.Path path = sender as System.Windows.Shapes.Path;
-        //    MessageBox.Show(path.Name);
-        //}
-
-        private static void Vertex_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private static void Node_MouseEnter(object sender, MouseEventArgs e)
         {
             System.Windows.Shapes.Path path = sender as System.Windows.Shapes.Path;
-            MessageBox.Show(path.Name);
+            //MessageBox.Show(path.Name);
+            path.ToolTip = path.Name;
         }
     }
 }
