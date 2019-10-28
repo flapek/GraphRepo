@@ -31,7 +31,12 @@
             <materialDesign:PackIcon Kind="Graphql" Background="AliceBlue"/>
 
             <Menu Grid.Column="1" Background="{x:Null}" Cursor="Arrow">
-                <MenuItem Header="_File"></MenuItem>
+                <MenuItem Header="_File">
+                    <MenuItem x:Name="SaveMenuItem" Header="Save" 
+                              InputGestureText="ctrl+s" Click="SaveMenuItem_Click"/>
+                    <MenuItem x:Name="SaveAsMenuItem" Header="Save as..." 
+                              InputGestureText="ctrl+shift+s" Click="SaveAsMenuItem_Click"/>
+                </MenuItem>
                 <MenuItem Header="_About"></MenuItem>
             </Menu>
 
@@ -58,7 +63,7 @@
 
         <Grid Grid.Row="1" Style="{StaticResource BaseGrid}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -123,12 +128,12 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="DrawGraphBtn" Style="{StaticResource ControlButton}" 
-                            PreviewMouseLeftButtonDown="DrawGraphBtn_PreviewMouseLeftButtonDown" 
-                            Grid.Column="1">Draw</Button>
                     <Button x:Name="ClearGraphBtn" Style="{StaticResource ControlButton}" 
                             Click="ClearGraphBtn_Click" 
                             Grid.Column="0">Clear</Button>
+                    <Button x:Name="DrawGraphBtn" Style="{StaticResource ControlButton}" 
+                            PreviewMouseLeftButtonDown="DrawGraphBtn_PreviewMouseLeftButtonDown" 
+                            Grid.Column="1">Draw</Button>
                 </Grid>
 
             </Grid>

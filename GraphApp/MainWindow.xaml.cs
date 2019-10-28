@@ -1,5 +1,10 @@
 ﻿using GraphApp.Class;
 using GraphApp.Model;
+using Microsoft.Win32;
+using Spire.Pdf;
+using Spire.Pdf.Graphics;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -174,8 +179,50 @@ namespace GraphApp
                 TextBoxEdges.ToolTip = $"m < {Calculations.CalculateTheBorderNumberOfEdges(nodes)}";
             }
         }
+
         #endregion
 
+        #region MenuItem
 
+        private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF (*.pdf)|*.pdf";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                PdfDocument doc = new PdfDocument();
+                PdfPageBase page = doc.Pages.Add();
+                page.Canvas.DrawEllipse(PdfBrushes.Black, 100, 100, 20, 20);
+                page.Canvas.DrawEllipse(PdfBrushes.Black, 200, 200, 20, 20);
+                page.Canvas.DrawLine(PdfPens.Blue, 110, 110, 210, 210);
+                page.Canvas.DrawString("A",
+                            new PdfFont(PdfFontFamily.Helvetica, 10),
+                            new PdfSolidBrush(new PdfRGBColor(255, 255, 255)),
+                            105, 105);
+
+                var path = saveFileDialog.FileName;
+                FileStream stream = File.Create(path);
+                stream.Close();
+                FileStream toStream = new FileStream(path, FileMode.Open);
+                doc.SaveToStream(toStream);
+                toStream.Close();
+                doc.Close();
+            }
+
+            
+        }
+        private void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                
+            }
+        }
+
+        #endregion
     }
 }
