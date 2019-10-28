@@ -18,9 +18,11 @@
     <Window.CommandBindings>
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed" />
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed" />
+        <CommandBinding Command="Open" Executed="OpenCommandBinding_Executed" />
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
         <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
     </Window.InputBindings>
     <Grid>
@@ -40,6 +42,8 @@
 
             <Menu Grid.Column="1" Background="{x:Null}" Cursor="Arrow">
                 <MenuItem Header="_File">
+                    <MenuItem x:Name="OpenMenuItem" Header="_Open"
+                              InputGestureText="ctrl+o" Click="OpenMenuItem_Click"/>
                     <MenuItem x:Name="SaveMenuItem" Header="_Save" 
                               InputGestureText="ctrl+s" Click="SaveMenuItem_Click"/>
                     <MenuItem x:Name="SaveAsMenuItem" Header="Sa_ve as..." 

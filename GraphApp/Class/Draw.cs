@@ -8,19 +8,6 @@ namespace GraphApp.Class
 {
     class Draw
     {
-        public static async Task<System.Windows.Shapes.Path> DrawElipse(Point startPoint, int radiusX, int radiusY)
-        {
-            System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
-            path.Stroke = Brushes.Black;
-            path.StrokeThickness = 2;
-            EllipseGeometry ellipseGeometry = new EllipseGeometry();
-            ellipseGeometry.Center = startPoint;
-            ellipseGeometry.RadiusX = radiusX;
-            ellipseGeometry.RadiusY = radiusY;
-            path.Data = ellipseGeometry;
-            return path;
-        }
-
         public static async Task<System.Windows.Shapes.Path> DrawEdge(Point startPoint, Point endPoint)
         {
             System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
@@ -40,13 +27,11 @@ namespace GraphApp.Class
             path.Fill = Brushes.Gray;
             path.StrokeThickness = 2;
             path.Name = vertex.Id;
-            path.MouseEnter += Node_MouseEnter;
-
             EllipseGeometry ellipseGeometry = new EllipseGeometry(vertex.CenterPoint, 15, 15);
-
             path.Data = ellipseGeometry;
-            return path;
 
+            path.MouseEnter += Node_MouseEnter;
+            return path;
         }
 
         private static void Node_MouseEnter(object sender, MouseEventArgs e)

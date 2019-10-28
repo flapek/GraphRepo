@@ -18,6 +18,7 @@ namespace GraphApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string pathToFile { get; set; }
 
         public MainWindow()
         {
@@ -118,46 +119,18 @@ namespace GraphApp
 
         private async void DrawGraphBtn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!await TheCorrectnessOfData.IsAValueInTheRange(10, 30, TextBoxNodes.Text) || !await TheCorrectnessOfData.IsAValueInTheRange(0.35, 0.45, TextBoxPropability.Text))
+            if (!await TheCorrectnessOfData.IsAValueInTheRange(10, 30, TextBoxNodes.Text) || !await TheCorrectnessOfData.IsAValueInTheRange(0.35, 0.45, TextBoxPropability.Text) ||
+                !await TheCorrectnessOfData.IsTheCorrectNumberOfEdges(TextBoxEdges.Text, TextBoxNodes.Text))
             {
                 MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 TextBoxNodes.Clear();
                 return;
             }
 
-            var graphList = Read.ReadFile(@"C:\Users\filap\source\repos\Graph\GraphApp\Example\GraphExample.txt");
-            var arrayGraph = ArrayCreator.GetGraphArray(graphList.Result);
-
-
-            Random rnd = new Random();
-            var cord = new Point[arrayGraph.Result.Length];
-            var p1 = new Point();
-            var p2 = new Point();
-            int numberOfNode = 0;
-            for (int i = 0; i < arrayGraph.Result.Length; i++)
-                for (int j = i; j < arrayGraph.Result.Length; j++)
-                    if (arrayGraph.Result[i][j] == 1)
-                        numberOfNode++;
-           
-            for (int i = 0; i < arrayGraph.Result.Length; i++)
-            {
-                cord[i] = new Point(rnd.Next(0, 500), rnd.Next(0, 500));
-            }
-            for (int i = 0; i < arrayGraph.Result.Length; i++)
-            {
-                GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
-                {
-                    Id = "A" + i + 1,
-                    CenterPoint = cord[i]
-                }));
-            }
-            for (int i = 0; i < arrayGraph.Result.Length; i++)
-                for (int j = i; j < arrayGraph.Result.Length; j++)
-                    if (arrayGraph.Result[i][j] == 1)
-                       GraphDrawCanvas.Children.Add(await Draw.DrawEdge(cord[i], cord[j]));
-
-
-            //GraphDrawCanvas.Children.Add(await Draw.DrawEdge(new Point(100, 100), new Point(200, 200)));
+            if (TextBoxNodes.Text == String.Empty)
+                DrawGraph(await ArrayCreator.GenerateGraphArray(int.Parse(TextBoxNodes.Text), double.Parse(TextBoxPropability.Text)));
+            else
+                DrawGraph(await ArrayCreator.GenerateGraphArray(int.Parse(TextBoxNodes.Text), double.Parse(TextBoxPropability.Text), int.Parse(TextBoxEdges.Text)));
         }
 
         #endregion
@@ -189,20 +162,30 @@ namespace GraphApp
         /// <param name="e"></param>
         private async void TextBoxNodes_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!int.TryParse(TextBoxNodes.Text, out int nodes))
+            if (!await TheCorrectnessOfData.IsTheCorrectNumberOfEdges(TextBoxEdges.Text, TextBoxNodes.Text))
                 return;
-            if (!int.TryParse(TextBoxEdges.Text, out int edges))
-                edges = 0;
-            if (await TheCorrectnessOfData.IsTheCorrectNumberOfEdges(edges, nodes))
-            {
-                TextBoxEdges.ToolTip = $"m < {Calculations.CalculateTheBorderNumberOfEdges(nodes)}";
-            }
+            TextBoxEdges.ToolTip = $"m < {Calculations.CalculateTheBorderNumberOfEdges(int.Parse(TextBoxNodes.Text))}";
+
         }
 
         #endregion
 
         #region MenuItem
 
+        private async void OpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                pathToFile = openFileDialog.FileName;
+                var graphList = Read.ReadFile(@"C:\Users\filap\source\repos\Graph\GraphApp\Example\GraphExample.txt");
+                var arrayGraph = ArrayCreator.GetGraphArray(graphList.Result);
+                DrawGraph(arrayGraph.Result);
+            }
+        }
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var filter = "PDF (*.pdf)|*.pdf";
@@ -224,11 +207,54 @@ namespace GraphApp
             var filter = "PDF (*.pdf)|*.pdf";
             SaveFile(filter);
         }
-
         public void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             var filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
             SaveFile(filter);
+        }
+        public void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                pathToFile = openFileDialog.FileName;
+                var graphList = Read.ReadFile(@"C:\Users\filap\source\repos\Graph\GraphApp\Example\GraphExample.txt");
+                var arrayGraph = ArrayCreator.GetGraphArray(graphList.Result);
+                DrawGraph(arrayGraph.Result);
+            }
+        }
+
+        #endregion
+
+        #region Method
+
+        private async void DrawGraph(int[][] array)
+        {
+            Random rnd = new Random();
+            var cord = new Point[array.Length];
+            int numberOfNode = 0;
+            for (int i = 0; i < array.Length; i++)
+                for (int j = i; j < array.Length; j++)
+                    if (array[i][j] == 1)
+                        numberOfNode++;
+
+            for (int i = 0; i < array.Length; i++)
+                cord[i] = new Point(rnd.Next(50, 500), rnd.Next(50, 500));
+
+            for (int i = 0; i < array.Length; i++)
+                for (int j = i; j < array.Length; j++)
+                    if (array[i][j] == 1)
+                        GraphDrawCanvas.Children.Add(await Draw.DrawEdge(cord[i], cord[j]));
+            for (int i = 0; i < array.Length; i++)
+                GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
+                {
+                    Id = "A" + (i + 1),
+                    CenterPoint = cord[i]
+                }));
+
         }
 
         #endregion
@@ -250,7 +276,6 @@ namespace GraphApp
                             new PdfSolidBrush(new PdfRGBColor(255, 255, 255)),
                             105, 105);
 
-
                 page.Canvas.DrawLine(PdfPens.Black, 10, 740, 585, 740);
                 page.Canvas.DrawString(DateTime.UtcNow.ToString(),
                            new PdfFont(PdfFontFamily.Helvetica, 14),
@@ -266,7 +291,5 @@ namespace GraphApp
                 doc.Close();
             }
         }
-
-
     }
 }

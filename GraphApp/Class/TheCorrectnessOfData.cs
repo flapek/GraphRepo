@@ -26,6 +26,13 @@ namespace GraphApp.Class
             else
                 return false;
         }
-        public static async Task<bool> IsTheCorrectNumberOfEdges(int edges, int nodes) => edges < Calculations.CalculateTheBorderNumberOfEdges(nodes);
+        public static async Task<bool> IsTheCorrectNumberOfEdges(string edges, string nodes)
+        {
+            if (!int.TryParse(edges, out int edgesResult) || !int.TryParse(nodes, out int nodesResult))
+            {
+                return false;
+            }
+            return edgesResult < Calculations.CalculateTheBorderNumberOfEdges(nodesResult);
+        }
     }
 }
