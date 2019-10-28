@@ -124,21 +124,40 @@ namespace GraphApp
                 TextBoxNodes.Clear();
                 return;
             }
-            //GraphDrawGrid.Children.Add(await Draw.DrawElipse(new Point(0, 0), 100, 100));
 
-            GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
+            var graphList = Read.ReadFile(@"C:\Users\filap\source\repos\Graph\GraphApp\Example\GraphExample.txt");
+            var arrayGraph = ArrayCreator.GetGraphArray(graphList.Result);
+
+
+            Random rnd = new Random();
+            var cord = new Point[arrayGraph.Result.Length];
+            var p1 = new Point();
+            var p2 = new Point();
+            int numberOfNode = 0;
+            for (int i = 0; i < arrayGraph.Result.Length; i++)
+                for (int j = i; j < arrayGraph.Result.Length; j++)
+                    if (arrayGraph.Result[i][j] == 1)
+                        numberOfNode++;
+           
+            for (int i = 0; i < arrayGraph.Result.Length; i++)
             {
-                Id = "A",
-                CenterPoint = new Point(100, 100)
-            }));
-
-            GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
+                cord[i] = new Point(rnd.Next(0, 500), rnd.Next(0, 500));
+            }
+            for (int i = 0; i < arrayGraph.Result.Length; i++)
             {
-                Id = "B",
-                CenterPoint = new Point(200, 200)
-            }));
+                GraphDrawCanvas.Children.Add(await Draw.DrawNode(new Node()
+                {
+                    Id = "A" + i + 1,
+                    CenterPoint = cord[i]
+                }));
+            }
+            for (int i = 0; i < arrayGraph.Result.Length; i++)
+                for (int j = i; j < arrayGraph.Result.Length; j++)
+                    if (arrayGraph.Result[i][j] == 1)
+                       GraphDrawCanvas.Children.Add(await Draw.DrawEdge(cord[i], cord[j]));
 
-            GraphDrawCanvas.Children.Add(await Draw.DrawEdge(new Point(100, 100), new Point(200, 200)));
+
+            //GraphDrawCanvas.Children.Add(await Draw.DrawEdge(new Point(100, 100), new Point(200, 200)));
         }
 
         #endregion
@@ -186,8 +205,38 @@ namespace GraphApp
 
         private void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            var filter = "PDF (*.pdf)|*.pdf";
+            SaveFile(filter);
+        }
+        private void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
+            SaveFile(filter);
+        }
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e) => Close();
+
+        #endregion
+
+        #region ComandBinding
+
+        private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var filter = "PDF (*.pdf)|*.pdf";
+            SaveFile(filter);
+        }
+
+        public void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
+            SaveFile(filter);
+        }
+
+        #endregion
+
+        private void SaveFile(string filter)
+        {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PDF (*.pdf)|*.pdf";
+            saveFileDialog.Filter = filter;
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -201,6 +250,13 @@ namespace GraphApp
                             new PdfSolidBrush(new PdfRGBColor(255, 255, 255)),
                             105, 105);
 
+
+                page.Canvas.DrawLine(PdfPens.Black, 10, 740, 585, 740);
+                page.Canvas.DrawString(DateTime.UtcNow.ToString(),
+                           new PdfFont(PdfFontFamily.Helvetica, 14),
+                           new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                           330, 740);
+
                 var path = saveFileDialog.FileName;
                 FileStream stream = File.Create(path);
                 stream.Close();
@@ -209,20 +265,8 @@ namespace GraphApp
                 toStream.Close();
                 doc.Close();
             }
-
-            
-        }
-        private void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                
-            }
         }
 
-        #endregion
+
     }
 }

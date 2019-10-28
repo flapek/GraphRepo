@@ -15,6 +15,14 @@
             <GradientStop Color="#FF747474" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed" />
+        <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -32,10 +40,13 @@
 
             <Menu Grid.Column="1" Background="{x:Null}" Cursor="Arrow">
                 <MenuItem Header="_File">
-                    <MenuItem x:Name="SaveMenuItem" Header="Save" 
+                    <MenuItem x:Name="SaveMenuItem" Header="_Save" 
                               InputGestureText="ctrl+s" Click="SaveMenuItem_Click"/>
-                    <MenuItem x:Name="SaveAsMenuItem" Header="Save as..." 
+                    <MenuItem x:Name="SaveAsMenuItem" Header="Sa_ve as..." 
                               InputGestureText="ctrl+shift+s" Click="SaveAsMenuItem_Click"/>
+                    <Separator/>
+                    <MenuItem x:Name="ExitMenuItem" Header="_Exit"
+                              Click="ExitMenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Header="_About"></MenuItem>
             </Menu>
