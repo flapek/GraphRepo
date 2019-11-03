@@ -149,7 +149,7 @@
             </Grid>
 
             <Grid Grid.Column="1" x:Name="SpaceToDraw" MouseLeftButtonDown="SpaceToDraw_MouseLeftButtonDown" 
-                            MouseWheel="SpaceToDraw_MouseWheel" MouseDown="SpaceToDraw_MouseDown">
+                            MouseWheel="SpaceToDraw_MouseWheel" MouseRightButtonDown="SpaceToDraw_MouseRightButtonDown">
                 <Grid.Background>
                     <ImageBrush ImageSource="Img/space-star-background.png" Opacity="0.78"/>
                 </Grid.Background>
@@ -158,11 +158,6 @@
                         <PerspectiveCamera x:Name="PerspectiveCamera" Position="0,0,1"
                                            LookDirection="0,0,-1" FieldOfView="60"/>
                     </Viewport3D.Camera>
-                    <ModelVisual3D>
-                        <ModelVisual3D.Content>
-                            <DirectionalLight Color="White" Direction="-0.612372,-0.5,-0.612372" />
-                        </ModelVisual3D.Content>
-                    </ModelVisual3D>
                 </Viewport3D>
             </Grid>
 
