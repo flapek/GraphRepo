@@ -29,10 +29,12 @@ namespace GraphApp.Class
 
         public static async Task<int[][]> OpenFile(string filter, bool multiselect)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = multiselect;
-            openFileDialog.Filter = filter;
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Multiselect = multiselect,
+                Filter = filter,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 var graphList = Class.File.ReadFile(openFileDialog.FileName);
@@ -44,9 +46,11 @@ namespace GraphApp.Class
 
         public static async Task SaveFile(Point[] cord, int[][] array, string filter)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = filter;
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = filter,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
             if (saveFileDialog.ShowDialog() == true)
             {
                 PdfDocument doc = new PdfDocument();

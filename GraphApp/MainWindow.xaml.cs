@@ -190,7 +190,7 @@ namespace GraphApp
             GraphArray = await Class.File.OpenFile("Text files (*.txt)|*.txt", false);
             if (GraphArray != null)
             {
-                // DrawGraph(GraphArray);
+                //DrawGraph(GraphArray);
                 //GraphDrawCanvas.Children.Clear();
             }
         }
