@@ -7,14 +7,10 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="640" MinWidth="880" WindowStyle="None" 
-        MouseDown="Window_MouseDown" MouseDoubleClick="Window_MouseDoubleClick">
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="FloralWhite"/>
-            <GradientStop Color="LightGray" Offset="0.2"/>
-            <GradientStop Color="#FF747474" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
+        MouseDoubleClick="Window_MouseDoubleClick"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium" TextElement.FontSize="16"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
     <Window.CommandBindings>
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed" />
         <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed" />
@@ -26,33 +22,35 @@
         <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
     </Window.InputBindings>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Style="{StaticResource MenuGrid}">
+        <Grid Background="{DynamicResource PrimaryHueMidBrush}" MouseLeftButtonDown="TopGrid_MouseLeftButtonDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
 
-            <materialDesign:PackIcon Kind="Graphql" Background="AliceBlue"/>
+            <materialDesign:PackIcon Kind="Graph" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <Menu Grid.Column="1" Background="{x:Null}" Cursor="Arrow">
-                <MenuItem Header="_File">
+            <Menu Grid.Column="1" Cursor="Arrow" Width="auto" Style="{DynamicResource MaterialDesignMenu}"
+                  HorizontalAlignment="Left" Background="{DynamicResource PrimaryHueMidBrush}">
+                <MenuItem Header="_File" VerticalAlignment="Center">
                     <MenuItem x:Name="OpenMenuItem" Header="_Open"
                               InputGestureText="ctrl+o" Click="OpenMenuItem_Click"/>
                     <MenuItem x:Name="SaveMenuItem" Header="_Save" 
                               InputGestureText="ctrl+s" Click="SaveMenuItem_Click"/>
                     <MenuItem x:Name="SaveAsMenuItem" Header="Sa_ve as..." 
                               InputGestureText="ctrl+shift+s" Click="SaveAsMenuItem_Click"/>
-                    <Separator/>
+                    <Separator Style="{DynamicResource MaterialDesignSeparator}"/>
                     <MenuItem x:Name="ExitMenuItem" Header="_Exit"
                               Click="ExitMenuItem_Click"/>
                 </MenuItem>
-                <MenuItem Header="_About"></MenuItem>
+                <MenuItem Header="_About" VerticalAlignment="Center"></MenuItem>
             </Menu>
 
             <Grid Grid.Column="2">
@@ -61,28 +59,28 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="MinimizeBtn" Grid.Column="0" Style="{StaticResource BaseButton}"
+                <Button x:Name="MinimizeBtn" Grid.Column="0"
                         ToolTip="Minimize" Click="MinimizeBtn_Click">
                     <materialDesign:PackIcon Kind="WindowMinimize"/>
                 </Button>
-                <Button x:Name="MaximizeBtn" Grid.Column="1" Style="{StaticResource BaseButton}"
+                <Button x:Name="MaximizeBtn" Grid.Column="1"
                         ToolTip="Maximize" Click="MaximizeBtn_Click" >
                     <materialDesign:PackIcon Kind="WindowMaximize" Name="MaximizeBtnIcon"/>
                 </Button>
-                <Button x:Name="CloseBtn" Grid.Column="2" Style="{StaticResource BaseButton}"
+                <Button x:Name="CloseBtn" Grid.Column="2"
                         ToolTip="Close program" Click="CloseBtn_Click">
                     <materialDesign:PackIcon Kind="Close"/>
                 </Button>
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" Style="{StaticResource BaseGrid}">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Grid>
+            <Grid Background="{DynamicResource SecondaryAccentBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="180"/>
                     <RowDefinition/>
@@ -91,69 +89,82 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <Grid>
+                <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.7*"/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="0.5*"/>
-                    </Grid.ColumnDefinitions>
 
-                    <Label Style="{StaticResource BaseLabel}" HorizontalAlignment="Left" 
-                           FontWeight="Black">
+                    <Label FontWeight="Black" Style="{DynamicResource MaterialDesignLabel}">
                         Generate
                     </Label>
 
-                    <Label Style="{StaticResource BaseLabel}" Grid.Row="1">
-                        Node:
-                    </Label>
-
-                    <Label Style="{StaticResource BaseLabel}" Grid.Row="2">
-                        Edges:
-                    </Label>
-
-                    <Label Style="{StaticResource BaseLabel}" Grid.Row="3">
-                        Propability:
-                    </Label>
-
-                    <TextBox x:Name="TextBoxNodes" Grid.Row="1" Grid.Column="1" 
-                             Style="{StaticResource BaseTextBox}" MaxLength="2"
-                             PreviewTextInput="TextBoxNodes_PreviewTextInput"
+                    <DockPanel Grid.Row="1">
+                        <Label Style="{DynamicResource MaterialDesignLabel}">
+                            Node:
+                        </Label>
+                        <TextBox x:Name="TextBoxNodes" MaxLength="2"
+                             PreviewTextInput="TextBoxNodes_PreviewTextInput" Margin="5" 
+                             VerticalAlignment="Top"
                              TextChanged="TextBoxNodes_TextChanged"
                              ToolTip="10-30"/>
-                    <TextBox x:Name="TextBoxEdges" Grid.Row="2" Grid.Column="1" 
-                             Style="{StaticResource BaseTextBox}" MaxLength="4"
-                             PreviewTextInput="TextBoxEdges_PreviewTextInput"
-                             ToolTip=""/>
-                    <TextBox x:Name="TextBoxPropability" Grid.Row="3" Grid.Column="1" 
-                             Style="{StaticResource BaseTextBox}" MaxLength="4"
-                             PreviewTextInput="TextBoxPropability_PreviewTextInput"
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="2">
+                        <Label Style="{DynamicResource MaterialDesignLabel}">
+                            Edges:
+                        </Label>
+                        <TextBox x:Name="TextBoxEdges" MaxLength="4"
+                             PreviewTextInput="TextBoxEdges_PreviewTextInput" Margin="5" 
+                             VerticalAlignment="Top" ToolTip=""/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="3">
+
+                        <Label Style="{DynamicResource MaterialDesignLabel}">
+                            Propability:
+                        </Label>
+                        <TextBox x:Name="TextBoxPropability" MaxLength="4"
+                             PreviewTextInput="TextBoxPropability_PreviewTextInput" Margin="5" 
+                             VerticalAlignment="Top"
                              ToolTip="0,35-0,45"/>
+                    </DockPanel>
                 </Grid>
 
-                <Grid Grid.Row="4" Style="{StaticResource BaseGrid}">
+                <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="ClearGraphBtn" Style="{StaticResource ControlButton}" 
-                            Click="ClearGraphBtn_Click" 
-                            Grid.Column="0">Clear</Button>
-                    <Button x:Name="DrawGraphBtn" Style="{StaticResource ControlButton}" 
+                    <Button x:Name="ClearGraphBtn" Click="ClearGraphBtn_Click" 
+                            Grid.Column="0" Margin="5">Clear</Button>
+                    <Button x:Name="DrawGraphBtn" Margin="5"
                             PreviewMouseLeftButtonDown="DrawGraphBtn_PreviewMouseLeftButtonDown" 
                             Grid.Column="1">Draw</Button>
                 </Grid>
 
             </Grid>
 
-            <Canvas x:Name="GraphDrawCanvas" Grid.Column="1" Background="WhiteSmoke"/>
+            <Grid Grid.Column="1" x:Name="SpaceToDraw" MouseLeftButtonDown="SpaceToDraw_MouseLeftButtonDown" 
+                            MouseWheel="SpaceToDraw_MouseWheel" MouseDown="SpaceToDraw_MouseDown">
+                <Grid.Background>
+                    <ImageBrush ImageSource="Img/space-star-background.png" Opacity="0.78"/>
+                </Grid.Background>
+                <Viewport3D x:Name="Viewport3D">
+                    <Viewport3D.Camera>
+                        <PerspectiveCamera x:Name="PerspectiveCamera" Position="0,0,1"
+                                           LookDirection="0,0,-1" FieldOfView="60"/>
+                    </Viewport3D.Camera>
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <DirectionalLight Color="White" Direction="-0.612372,-0.5,-0.612372" />
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                </Viewport3D>
+            </Grid>
 
         </Grid>
     </Grid>

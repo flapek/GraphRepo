@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphApp.Class
 {
-    class ArrayCreator
+    static class ArrayCreator
     {
         public static async Task<int[][]> GetGraphArray(List<string> l)
         {
@@ -53,7 +53,8 @@ namespace GraphApp.Class
 
         public static async Task<int[][]> GenerateGraphArray(int nodes, double propability, int edges)
         {
-            Random random = new Random();
+            Random random1 = new Random();
+            Random random2 = new Random();
             var array = new int[nodes][];
             int numberOfEdges = 0;
             for (int i = 0; i < nodes; i++)
@@ -65,7 +66,7 @@ namespace GraphApp.Class
                 {
                     for (int j = i; j < nodes; j++)
                     {
-                        if (i != j && propability > (random.Next(1, 10000) / 10000) && numberOfEdges != edges && array[i][j] != 1)
+                        if (i != j && propability > (random1.Next(1, 10000) / 10000) && numberOfEdges != edges && array[i][j] != 1 && random1.Next(10, 1000) >= random2.Next(10, 1000))
                         {
                             array[i][j] = 1;
                             array[j][i] = 1;

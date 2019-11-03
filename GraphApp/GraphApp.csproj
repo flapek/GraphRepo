@@ -37,10 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.2.1-ci696\lib\net45\MaterialDesignColors.dll</HintPath>
+      <HintPath>..\packages\MaterialDesignColors.1.2.1-ci727\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.3.0.0-ci696\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <HintPath>..\packages\MaterialDesignThemes.3.0.0-ci727\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Spire.License, Version=1.3.7.46, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\Spire.PDF.5.10.8\lib\net46\Spire.License.dll</HintPath>
@@ -70,26 +70,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="LayoutDictionary\ButtonLayout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LayoutDictionary\GridLayout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LayoutDictionary\LabelLayout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LayoutDictionary\MaterialDesigneIconLayout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LayoutDictionary\TextBoxLayout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,7 +81,7 @@
     <Compile Include="Class\ArrayCreator.cs" />
     <Compile Include="Class\Calculations.cs" />
     <Compile Include="Class\Draw.cs" />
-    <Compile Include="Class\Read.cs" />
+    <Compile Include="Class\File.cs" />
     <Compile Include="Class\TheCorrectnessOfData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -142,6 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Example\GraphExample.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\space-star-background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

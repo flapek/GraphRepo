@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphApp.Class
 {
-    class Calculations
+    static class Calculations
     {
         public static double CalculateTheBorderNumberOfEdges(int nodes) => 0.5 * (nodes - 1) * nodes;
 

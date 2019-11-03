@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace GraphApp.Class
 {
-    class TheCorrectnessOfData
-
+    static class TheCorrectnessOfData
     {
         /// <summary>
         /// check that the text entered is correct
