@@ -4,16 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6CF9C51B-3BED-4453-831D-50186D5B0073}</ProjectGuid>
+    <ProjectGuid>{038D6534-A223-4C9C-8564-FCA56B535C4D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GraphApp</RootNamespace>
-    <AssemblyName>GraphApp</AssemblyName>
+    <RootNamespace>WinUI</RootNamespace>
+    <AssemblyName>WinUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -24,7 +26,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\GraphApp.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,22 +37,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MaterialDesignColors, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.2.1-ci727\lib\net45\MaterialDesignColors.dll</HintPath>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.3.0.0-ci727\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.License, Version=1.3.7.46, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.PDF.5.10.8\lib\net46\Spire.License.dll</HintPath>
-    </Reference>
-    <Reference Include="Spire.Pdf, Version=5.10.8.2046, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.PDF.5.10.8\lib\net46\Spire.Pdf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,7 +57,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\NodeViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,26 +65,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Class\ArrayCreator.cs" />
-    <Compile Include="Class\Calculations.cs" />
-    <Compile Include="Class\Draw.cs" />
-    <Compile Include="Class\File.cs" />
-    <Compile Include="Class\TheCorrectnessOfData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Simple Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Button.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -125,14 +97,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Example\GraphExample.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Img\space-star-background.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.UI.Xaml.2.3.191107001-prerelease\build\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.3.191107001-prerelease\build\Microsoft.UI.Xaml.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.3.191107001-prerelease\build\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.3.191107001-prerelease\build\Microsoft.UI.Xaml.targets'))" />
+  </Target>
 </Project>

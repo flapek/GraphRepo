@@ -1,9 +1,11 @@
 ﻿using GraphApp.Class;
 using GraphApp.Model;
+using GraphApp.ViewModel;
 using Microsoft.Win32;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +21,7 @@ namespace GraphApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        readonly NodeViewModel NodeViewModel = new NodeViewModel();
         private Point3D[] NodeCord { get; set; }
         private int[][] GraphArray { get; set; }
         private double xPosition;
@@ -28,6 +31,7 @@ namespace GraphApp
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = NodeViewModel;
         }
 
         #region Window state
@@ -114,32 +118,42 @@ namespace GraphApp
 
         private async void DrawGraphBtn_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!await TheCorrectnessOfData.IsAValueInTheRange(10, 30, TextBoxNodes.Text) || !await TheCorrectnessOfData.IsAValueInTheRange(0.35, 0.45, TextBoxPropability.Text))
-            {
-                MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                TextBoxNodes.Clear();
-                TextBoxPropability.Clear();
-                return;
-            }
-            if (await TheCorrectnessOfData.IsTheCorrectNumberOfEdges(TextBoxEdges.Text, TextBoxNodes.Text))
-            {
-                MessageBox.Show("Value out of the range", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                TextBoxEdges.Clear();
-                return;
-            }
+            //if (!await TheCorrectnessOfData.IsAValueInTheRange(10, 30, TextBoxNodes.Text) || !await TheCorrectnessOfData.IsAValueInTheRange(0.35, 0.45, TextBoxPropability.Text))
+            //{
+            //    MessageBox.Show("Incorect value", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    TextBoxNodes.Clear();
+            //    TextBoxPropability.Clear();
+            //    return;
+            //}
+            //if (await TheCorrectnessOfData.IsTheCorrectNumberOfEdges(TextBoxEdges.Text, TextBoxNodes.Text))
+            //{
+            //    MessageBox.Show("Value out of the range", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    TextBoxEdges.Clear();
+            //    return;
+            //}
 
-            if (TextBoxEdges.Text == "")
-            {
-                GraphArray = await ArrayCreator.GenerateGraphArray(int.Parse(TextBoxNodes.Text), double.Parse(TextBoxPropability.Text));
-                DrawGraph(GraphArray);
-            }
-            else
-            {
-                GraphArray = await ArrayCreator.GenerateGraphArray(int.Parse(TextBoxNodes.Text), double.Parse(TextBoxPropability.Text), int.Parse(TextBoxEdges.Text));
-                DrawGraph(GraphArray);
-            }
+            //if (TextBoxEdges.Text == "")
+            //{
+            //    GraphArray = await ArrayCreator.GenerateGraphArray(int.Parse(TextBoxNodes.Text), double.Parse(TextBoxPropability.Text));
+            //    DrawGraph(GraphArray);
+            //}
+            //else
+            //{
+            //    GraphArray = await ArrayCreator.GenerateGraphArray(int.Parse(TextBoxNodes.Text), double.Parse(TextBoxPropability.Text), int.Parse(TextBoxEdges.Text));
+            //    DrawGraph(GraphArray);
+            //}
 
 
+            Random rnd = new Random();
+            NodeCord = new Point3D[1];
+            NodeCord[0] = new Point3D(rnd.NextDouble(), rnd.NextDouble(), rnd.NextDouble());
+            Model3DGroup model3DGroup = new Model3DGroup();
+            DefineModel(model3DGroup, NodeCord[0]);
+            ModelVisual3D modelVisual = new ModelVisual3D
+            {
+                Content = model3DGroup
+            };
+            NodeViewModel.modelVisual3Ds.Add(modelVisual);
         }
 
         #endregion
@@ -190,19 +204,18 @@ namespace GraphApp
             GraphArray = await Class.File.OpenFile("Text files (*.txt)|*.txt", false);
             if (GraphArray != null)
             {
-                //DrawGraph(GraphArray);
-                //GraphDrawCanvas.Children.Clear();
+                DrawGraph(GraphArray);
             }
         }
         private async void SaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var filter = "PDF (*.pdf)|*.pdf";
-            //await Class.File.SaveFile(NodeCord, GraphArray, filter);
+            await Class.File.SaveFile(NodeCord, GraphArray, filter);
         }
         private async void SaveAsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
-            //await Class.File.SaveFile(NodeCord, GraphArray, filter);
+            await Class.File.SaveFile(NodeCord, GraphArray, filter);
         }
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e) => Close();
 
@@ -210,24 +223,23 @@ namespace GraphApp
 
         #region ComandBinding
 
-        private async void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            var filter = "PDF (*.pdf)|*.pdf";
-            // await Class.File.SaveFile(NodeCord, GraphArray, filter);
-        }
-        private async void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            var filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
-            //await Class.File.SaveFile(NodeCord, GraphArray, filter);
-        }
         private async void OpenCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             GraphArray = await Class.File.OpenFile("Text files (*.txt)|*.txt", false);
             if (GraphArray != null)
             {
-                //DrawGraph(GraphArray);
-                //GraphDrawCanvas.Children.Clear();
+                DrawGraph(GraphArray);
             }
+        }
+        private async void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var filter = "PDF (*.pdf)|*.pdf";
+            await Class.File.SaveFile(NodeCord, GraphArray, filter);
+        }
+        private async void SaveAsCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var filter = "PDF (*.pdf)|*.pdf|PNG (*.png)|*.png";
+            await Class.File.SaveFile(NodeCord, GraphArray, filter);
         }
 
         #endregion
@@ -256,8 +268,10 @@ namespace GraphApp
             {
                 Model3DGroup model3DGroup = new Model3DGroup();
                 DefineModel(model3DGroup, NodeCord[i]);
-                ModelVisual3D modelVisual = new ModelVisual3D();
-                modelVisual.Content = model3DGroup;
+                ModelVisual3D modelVisual = new ModelVisual3D
+                {
+                    Content = model3DGroup
+                };
 
                 Viewport3D.Children.Add(modelVisual);
             }

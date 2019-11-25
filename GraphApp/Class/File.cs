@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Media3D;
 
 namespace GraphApp.Class
 {
@@ -44,13 +45,14 @@ namespace GraphApp.Class
             return null;
         }
 
-        public static async Task SaveFile(Point[] cord, int[][] array, string filter)
+        public static async Task SaveFile(Point3D[] cord, int[][] array, string filter)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = filter,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             };
+            int scale = 300;
             if (saveFileDialog.ShowDialog() == true)
             {
                 PdfDocument doc = new PdfDocument();
@@ -59,15 +61,15 @@ namespace GraphApp.Class
                 for (int i = 0; i < array.Length; i++)
                     for (int j = i; j < array.Length; j++)
                         if (array[i][j] == 1)
-                            page.Canvas.DrawLine(PdfPens.Blue, float.Parse(cord[i].X.ToString()) / 2 + 10, float.Parse(cord[i].Y.ToString()) / 2 + 10,
-                                float.Parse(cord[j].X.ToString()) / 2 + 10, float.Parse(cord[j].Y.ToString()) / 2 + 10);
+                            page.Canvas.DrawLine(PdfPens.Blue, float.Parse(cord[i].X.ToString()) * scale + 10, float.Parse(cord[i].Y.ToString()) * scale + 10,
+                                float.Parse(cord[j].X.ToString()) * scale + 10, float.Parse(cord[j].Y.ToString()) * scale + 10);
 
                 for (int i = 0; i < cord.Length; i++)
                 {
-                    page.Canvas.DrawEllipse(PdfBrushes.Black, float.Parse(cord[i].X.ToString()) / 2, float.Parse(cord[i].Y.ToString()) / 2, 26, 26);
-                    page.Canvas.DrawString("N" + (i + 1),
+                    page.Canvas.DrawEllipse(PdfBrushes.Black, float.Parse(cord[i].X.ToString()) * scale, float.Parse(cord[i].Y.ToString()) * scale, 26, 26);
+                    page.Canvas.DrawString((i + 1).ToString(),
                                 new PdfFont(PdfFontFamily.Helvetica, 10), new PdfSolidBrush(new PdfRGBColor(255, 255, 255)),
-                                float.Parse(cord[i].X.ToString()) / 2 + 5, float.Parse(cord[i].Y.ToString()) / 2 + 5);
+                                float.Parse(cord[i].X.ToString()) * scale + 5, float.Parse(cord[i].Y.ToString()) * scale + 5);
                 }
 
                 page.Canvas.DrawLine(PdfPens.Black, 10, 740, 585, 740);
